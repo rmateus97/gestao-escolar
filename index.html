@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão Escolar</title>
+    <link rel="stylesheet" href="style2.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-graduation-cap"></i> Sistema de Gestão Escolar</h1>          
+            <p>Painel do Diretor</p>
+            <div>
+                <p id="user-greeting"></p> <button id="logout-btn" class="btn btn-danger">Sair</button>
+            </div>  
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="professores">
+                <i class="fas fa-chalkboard-teacher"></i> Professores
+            </button>
+            <button class="tab-button" data-tab="alunos">
+                <i class="fas fa-user-graduate"></i> Alunos
+            </button>
+        </nav>
+
+        <div id="professores" class="tab-content active">
+            <div class="content-header">
+                <h2>Gestão de Professores</h2>
+                <div class="search-container">
+                    <input type="text" id="search-professores" placeholder="Buscar professores...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <button class="btn btn-primary" id="add-professor">
+                    <i class="fas fa-plus"></i> Novo Professor
+                </button>
+            </div>
+
+            <div class="table-container">
+                <table id="professores-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Email Institucional</th>
+                            <th>Telefone</th>
+                            <th>Disciplinas</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="professores-tbody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="alunos" class="tab-content">
+            <div class="content-header">
+                <h2>Gestão de Alunos</h2>
+                <div class="search-container">
+                    <input type="text" id="search-alunos" placeholder="Buscar alunos...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <button class="btn btn-primary" id="add-aluno">
+                    <i class="fas fa-plus"></i> Novo Aluno
+                </button>
+            </div>
+
+            <div id="turmas-view" class="turmas-view">
+                <div class="view-header">
+                    <h3>Turmas Cadastradas</h3>
+                    <button class="btn btn-secondary" id="view-all-alunos">
+                        <i class="fas fa-list"></i> Ver Todos os Alunos
+                    </button>
+                </div>
+                <div id="turmas-grid" class="turmas-grid">
+                    </div>
+            </div>
+
+            <div id="alunos-view" class="alunos-view" style="display: none;">
+                <div class="view-header">
+                    <h3 id="alunos-view-title">Todos os Alunos</h3>
+                    <button class="btn btn-secondary" id="back-to-turmas">
+                        <i class="fas fa-arrow-left"></i> Voltar às Turmas
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="alunos-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Turma</th>
+                                <th>Responsável</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alunos-tbody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="professor-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="professor-modal-title">Novo Professor</h3>
+                <span class="close" id="close-professor-modal">&times;</span>
+            </div>
+            <form id="professor-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="professor-nome-completo">Nome Completo *</label>
+                        <input type="text" id="professor-nome-completo" name="nome_completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor-data-nascimento">Data de Nascimento *</label>
+                        <input type="date" id="professor-data-nascimento" name="data_nascimento" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="professor-genero">Gênero *</label>
+                        <select id="professor-genero" name="genero" required>
+                            <option value="">Selecione...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor-cpf">CPF *</label>
+                        <input type="text" id="professor-cpf" name="cpf" placeholder="000.000.000-00" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="professor-rg">RG *</label>
+                        <input type="text" id="professor-rg" name="rg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor-telefone">Telefone *</label>
+                        <input type="tel" id="professor-telefone" name="telefone" placeholder="(11) 99999-9999" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="professor-email-institucional">Email Institucional *</label>
+                    <input type="email" id="professor-email-institucional" name="email_institucional" required>
+                </div>
+                
+                <h4>Endereço</h4>
+                <div class="form-row">
+                    <div class="form-group flex-2">
+                        <label for="professor-endereco-rua">Rua *</label>
+                        <input type="text" id="professor-endereco-rua" name="endereco_rua" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor-endereco-numero">Número *</label>
+                        <input type="text" id="professor-endereco-numero" name="endereco_numero" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="professor-endereco-bairro">Bairro *</label>
+                        <input type="text" id="professor-endereco-bairro" name="endereco_bairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor-endereco-cidade">Cidade *</label>
+                        <input type="text" id="professor-endereco-cidade" name="endereco_cidade" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="professor-endereco-estado">Estado *</label>
+                        <select id="professor-endereco-estado" name="endereco_estado" required>
+                            <option value="">Selecione...</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor-endereco-cep">CEP *</label>
+                        <input type="text" id="professor-endereco-cep" name="endereco_cep" placeholder="00000-000" required>
+                    </div>
+                </div>
+                
+                <h4>Informações Profissionais</h4>
+                <div class="form-group">
+                    <label for="professor-disciplinas">Disciplinas que Leciona *</label>
+                    <input type="text" id="professor-disciplinas" name="disciplinas" placeholder="Ex: Matemática, Física" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="professor-formacao-academica">Formação Acadêmica *</label>
+                    <textarea id="professor-formacao-academica" name="formacao_academica" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="professor-data-admissao">Data de Admissão *</label>
+                        <input type="date" id="professor-data-admissao" name="data_admissao" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor-status">Status *</label>
+                        <select id="professor-status" name="status" required>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Licença">Licença</option>
+                            <option value="Desligado">Desligado</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-professor">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="aluno-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="aluno-modal-title">Novo Aluno</h3>
+                <span class="close" id="close-aluno-modal">&times;</span>
+            </div>
+            <form id="aluno-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aluno-nome-completo">Nome Completo *</label>
+                        <input type="text" id="aluno-nome-completo" name="nome_completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno-data-nascimento">Data de Nascimento *</label>
+                        <input type="date" id="aluno-data-nascimento" name="data_nascimento" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aluno-genero">Gênero *</label>
+                        <select id="aluno-genero" name="genero" required>
+                            <option value="">Selecione...</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno-cpf">CPF *</label>
+                        <input type="text" id="aluno-cpf" name="cpf" placeholder="000.000.000-00" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-rg">RG</label>
+                    <input type="text" id="aluno-rg" name="rg">
+                </div>
+                
+                <h4>Endereço</h4>
+                <div class="form-row">
+                    <div class="form-group flex-2">
+                        <label for="aluno-endereco-rua">Rua *</label>
+                        <input type="text" id="aluno-endereco-rua" name="endereco_rua" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno-endereco-numero">Número *</label>
+                        <input type="text" id="aluno-endereco-numero" name="endereco_numero" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aluno-endereco-bairro">Bairro *</label>
+                        <input type="text" id="aluno-endereco-bairro" name="endereco_bairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno-endereco-cidade">Cidade *</label>
+                        <input type="text" id="aluno-endereco-cidade" name="endereco_cidade" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aluno-endereco-estado">Estado *</label>
+                        <select id="aluno-endereco-estado" name="endereco_estado" required>
+                            <option value="">Selecione...</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno-endereco-cep">CEP *</label>
+                        <input type="text" id="aluno-endereco-cep" name="endereco_cep" placeholder="00000-000" required>
+                    </div>
+                </div>
+                
+                <h4>Dados do Responsável</h4>
+                <div class="form-group">
+                    <label for="aluno-nome-responsavel">Nome do Responsável *</label>
+                    <input type="text" id="aluno-nome-responsavel" name="nome_responsavel" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aluno-telefone-responsavel">Telefone do Responsável *</label>
+                        <input type="tel" id="aluno-telefone-responsavel" name="telefone_responsavel" placeholder="(11) 99999-9999" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno-email-responsavel">Email do Responsável *</label>
+                        <input type="email" id="aluno-email-responsavel" name="email_responsavel" required>
+                    </div>
+                </div>
+                
+                <h4>Informações Escolares</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="aluno-turma">Turma</label>
+                        <div class="turma-selection">
+                            <select id="aluno-turma" name="turma_id">
+                                <option value="">Selecione uma turma...</option>
+                            </select>
+                            <button type="button" class="btn btn-secondary btn-small" id="nova-turma-btn">
+                                <i class="fas fa-plus"></i> Nova Turma
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno-ano-ingresso">Ano de Ingresso *</label>
+                        <input type="number" id="aluno-ano-ingresso" name="ano_ingresso" min="2000" max="2030" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="aluno-status">Status *</label>
+                    <select id="aluno-status" name="status" required>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                        <option value="Transferido">Transferido</option>
+                        <option value="Concluído">Concluído</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-aluno">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="turma-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nova Turma</h3>
+                <span class="close" id="close-turma-modal">&times;</span>
+            </div>
+            <form id="turma-form">
+                <div class="form-group">
+                    <label for="turma-nome">Nome da Turma *</label>
+                    <input type="text" id="turma-nome" name="nome" placeholder="Ex: 9º Ano A" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="turma-serie">Série *</label>
+                        <select id="turma-serie" name="serie" required>
+                            <option value="">Selecione...</option>
+                            <option value="1º Ano">1º Ano</option>
+                            <option value="2º Ano">2º Ano</option>
+                            <option value="3º Ano">3º Ano</option>
+                            <option value="4º Ano">4º Ano</option>
+                            <option value="5º Ano">5º Ano</option>
+                            <option value="6º Ano">6º Ano</option>
+                            <option value="7º Ano">7º Ano</option>
+                            <option value="8º Ano">8º Ano</option>
+                            <option value="9º Ano">9º Ano</option>
+                            <option value="1º Médio">1º Médio</option>
+                            <option value="2º Médio">2º Médio</option>
+                            <option value="3º Médio">3º Médio</option>
+                        </select>
+                    </div>
+                    <!-- Selecionar professor - Nova tabela -->
+                    <div class="form-group">
+                        <label for="professor-turma">Professor *</label>
+                        <select id="professor-turma" name="turma_id">
+                            <option value="">Selecione...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="turma-ano">Ano *</label>
+                        <input type="number" id="turma-ano" name="ano" min="2000" max="2030" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancel-turma">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Criar Turma</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <span class="close" id="close-confirm-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message">Tem certeza que deseja excluir este registro?</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="cancel-delete">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete">Excluir</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" class="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
